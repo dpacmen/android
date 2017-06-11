@@ -66,11 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     LatLng latLng = new LatLng(latitude, longitude);
                     mMap.addMarker(new MarkerOptions().position(latLng).title(result));
                     mMap.setMaxZoomPreference(20);
-<<<<<<< a09542491c026a3443b7b850f94965d236c08a26
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10.2f));
-=======
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.2f));
->>>>>>> updated
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.2f));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
