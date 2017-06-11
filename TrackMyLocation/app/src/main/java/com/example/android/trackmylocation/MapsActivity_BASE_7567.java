@@ -2,8 +2,6 @@ package com.example.android.trackmylocation;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,15 +16,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.IOException;
-import java.util.List;
-
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private LocationManager manager;
-    private LocationListener locationListener;
+    private LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +29,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //get the location service
-        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        //request the location update thru location manager
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -49,31 +41,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        locationListener = new LocationListener() {
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                //get the latitude and longitude from the location
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                //get the location name from latitude and longitude
-                Geocoder geocoder = new Geocoder(getApplicationContext());
-                try {
-                    List<Address> addresses =
-                            geocoder.getFromLocation(latitude, longitude, 1);
-                    String result = addresses.get(0).getSubLocality() + ":";
-                    result += addresses.get(0).getLocality() + ":";
-                    result += addresses.get(0).getCountryCode();
-                    LatLng latLng = new LatLng(latitude, longitude);
-                    mMap.addMarker(new MarkerOptions().position(latLng).title(result));
-                    mMap.setMaxZoomPreference(20);
-<<<<<<< a09542491c026a3443b7b850f94965d236c08a26
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,10.2f));
-=======
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.2f));
->>>>>>> updated
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
             }
 
             @Override
@@ -90,8 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onProviderDisabled(String provider) {
 
             }
-        };
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        });
     }
 
 
@@ -109,8 +79,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10.2f));
     }
 }
