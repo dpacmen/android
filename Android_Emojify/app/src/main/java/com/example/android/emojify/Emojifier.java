@@ -122,6 +122,60 @@ class Emojifier {
 
         return resultBitmap;
     }
+    
+    
+    /**
+     * Determines the closest emoji to the expression on the face, based on the
+     * odds that the person is smiling and has each eye open.
+     *
+     * @param face The face for which you pick an emoji.
+     */
 
+    private static Emoji whichEmoji(Face face) {
+        // Log all the probabilities
+        Timber.d("whichEmoji: smilingProb = " + face.getIsSmilingProbability());
+        Timber.d("whichEmoji: leftEyeOpenProb = "
+                + face.getIsLeftEyeOpenProbability());
+        Timber.d("whichEmoji: rightEyeOpenProb = "
+                + face.getIsRightEyeOpenProbability());
+
+
+        boolean smiling = face.getIsSmilingProbability() > SMILING_PROB_THRESHOLD;
+
+        boolean leftEyeClosed = face.getIsLeftEyeOpenProbability() < EYE_OPEN_PROB_THRESHOLD;
+        boolean rightEyeClosed = face.getIsRightEyeOpenProbability() < EYE_OPEN_PROB_THRESHOLD;
+
+
+        // Determine and log the appropriate emoji
+        Emoji emoji;
+        if (smiling) {
+            if (leftEyeClosed && !rightEyeClosed) {
+                emoji = Emoji.LEFT_WINK;
+            } else if (rightEyeClosed && !leftEyeClosed) {
+                emoji = Emoji.RIGHT_WINK;
+            } else if (leftEyeClosed) {
+                emoji = Emoji.CLOSED_EYE_SMILE;
+            } else {
+                emoji = Emoji.SMILE;
+            }
+        } else {
+            if (leftEyeClosed && !rightEyeClosed) {
+                emoji = Emoji.LEFT_WINK_FROWN;
+            } else if (rightEyeClosed && !leftEyeClosed) {
+                emoji = Emoji.RIGHT_WINK_FROWN;
+            } else if (leftEyeClosed) {
+                emoji = Emoji.CLOSED_EYE_FROWN;
+            } else {
+                emoji = Emoji.FROWN;
+            }
+        }
+
+
+        // Log the chosen Emoji
+        Timber.d("whichEmoji: " + emoji.name());
+
+        // return the chosen Emoji
+        return emoji;
+    }
 
 }
