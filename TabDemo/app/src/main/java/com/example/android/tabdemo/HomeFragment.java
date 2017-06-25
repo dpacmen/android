@@ -147,30 +147,30 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void loadAudiofiles() {
+//     public void loadAudiofiles() {
 
-        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
-        String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, selection, null, sortOrder);
+//         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+//         String selection = MediaStore.Audio.Media.IS_MUSIC + "!=0";
+//         String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
+//         Cursor cursor = getActivity().getContentResolver().query(uri, null, selection, null, sortOrder);
 
-        Log.d("MUSIC", String.valueOf(cursor.getCount()));
+//         Log.d("MUSIC", String.valueOf(cursor.getCount()));
 
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
-                String url = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
+//         if (cursor != null && cursor.getCount() > 0) {
+//             while (cursor.moveToNext()) {
+//                 String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
+//                 String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+//                 String url = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA));
 
-                SongInfo s = new SongInfo(name, artist, url);
-                songs.add(s);
+//                 SongInfo s = new SongInfo(name, artist, url);
+//                 songs.add(s);
 
-            }
-        }
-        cursor.close();
-        songAdapter = new SongAdapter(getActivity(), songs);
-        songAdapter.notifyDataSetChanged();
-    }
+//             }
+//         }
+//         cursor.close();
+//         songAdapter = new SongAdapter(getActivity(), songs);
+//         songAdapter.notifyDataSetChanged();
+//     }
 
     @Override
     public void onAttach(Context context) {
