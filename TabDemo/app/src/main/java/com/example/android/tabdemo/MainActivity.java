@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter.addFragments(new TopFreeFragment(), "TOP FREE");
         viewPagerAdapter.addFragments(new TopPaidFragment(), "TOP PAID");
         viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager  );
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 }
