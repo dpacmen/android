@@ -7,16 +7,8 @@ package com.example.android.tabdemo;
 public class SongInfo {
     public String songName, artistName, url;
 
+    //empty constructor
     public SongInfo() {
-
-    }
-
-    public String getSongName() {
-        return songName;
-    }
-
-    public String getArtistName() {
-        return artistName;
     }
 
     public String getUrl() {
